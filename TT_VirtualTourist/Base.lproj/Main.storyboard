@@ -22,33 +22,50 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="P8A-3i-VOf">
-                                <rect key="frame" x="0.0" y="64" width="375" height="553"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on the PIN to remove it" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-dv-1sX">
-                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmd-2q-49a">
+                                <rect key="frame" x="0.0" y="616" width="375" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on the PIN to remove it" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZwB-dv-1sX">
+                                        <rect key="frame" x="59" y="13" width="257.5" height="23"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="ewN-7L-OTa"/>
+                                    <constraint firstItem="ZwB-dv-1sX" firstAttribute="centerY" secondItem="dmd-2q-49a" secondAttribute="centerY" constant="-1" id="7DP-wg-tJE" userLabel="Bottom Label.centerY = centerY"/>
+                                    <constraint firstItem="ZwB-dv-1sX" firstAttribute="centerX" secondItem="dmd-2q-49a" secondAttribute="centerX" id="sb9-93-PIV"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="P8A-3i-VOf" firstAttribute="leading" secondItem="ZwB-dv-1sX" secondAttribute="leading" id="Bkt-Ue-WNm"/>
+                            <constraint firstItem="dmd-2q-49a" firstAttribute="trailing" secondItem="P8A-3i-VOf" secondAttribute="trailing" id="25E-l1-Qqb"/>
                             <constraint firstItem="P8A-3i-VOf" firstAttribute="top" secondItem="Lzc-k3-Hel" secondAttribute="bottom" id="DKG-dv-GMH"/>
-                            <constraint firstItem="gwR-DP-jxA" firstAttribute="top" secondItem="P8A-3i-VOf" secondAttribute="bottom" constant="50" id="b7H-DR-Sqr"/>
-                            <constraint firstItem="gwR-DP-jxA" firstAttribute="top" secondItem="ZwB-dv-1sX" secondAttribute="bottom" id="cG5-tD-r8h"/>
-                            <constraint firstAttribute="trailing" secondItem="ZwB-dv-1sX" secondAttribute="trailing" id="geG-2u-T8q"/>
-                            <constraint firstItem="ZwB-dv-1sX" firstAttribute="leading" secondItem="KrQ-iI-ofr" secondAttribute="leading" id="kdG-c5-tiq"/>
-                            <constraint firstItem="P8A-3i-VOf" firstAttribute="trailing" secondItem="ZwB-dv-1sX" secondAttribute="trailing" id="pHw-rO-lAj"/>
+                            <constraint firstItem="dmd-2q-49a" firstAttribute="bottom" secondItem="gwR-DP-jxA" secondAttribute="top" id="In0-Bi-xkF"/>
+                            <constraint firstItem="dmd-2q-49a" firstAttribute="leading" secondItem="P8A-3i-VOf" secondAttribute="leading" id="YQO-ve-Fdo"/>
+                            <constraint firstItem="dmd-2q-49a" firstAttribute="leading" secondItem="KrQ-iI-ofr" secondAttribute="leading" id="Yo7-Wc-F6u"/>
+                            <constraint firstItem="gwR-DP-jxA" firstAttribute="top" secondItem="P8A-3i-VOf" secondAttribute="bottom" id="b7H-DR-Sqr"/>
+                            <constraint firstAttribute="trailing" secondItem="dmd-2q-49a" secondAttribute="trailing" id="sN9-D7-YNG"/>
+                            <constraint firstItem="dmd-2q-49a" firstAttribute="top" secondItem="KrQ-iI-ofr" secondAttribute="top" constant="616" id="vw3-7e-N2D"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hsm-ZJ-sZJ">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="c8a-X9-til"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="c8a-X9-til">
+                            <connections>
+                                <action selector="editButtonPressed:" destination="7Pa-jc-sqh" id="IRg-aD-ocJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bottomLabel" destination="ZwB-dv-1sX" id="ddy-JR-Utx"/>
+                        <outlet property="bottomView" destination="dmd-2q-49a" id="mY9-9u-hA0"/>
+                        <outlet property="editButton" destination="c8a-X9-til" id="LTu-CH-WNX"/>
+                        <outlet property="mapView" destination="P8A-3i-VOf" id="da3-o9-vQf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M5O-ZZ-nOg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
