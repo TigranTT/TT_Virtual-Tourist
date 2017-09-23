@@ -69,6 +69,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             mapView.addAnnotation(annotation)
+            print("PIN dropped")
+            print(coordinate)
         }
     }
     
