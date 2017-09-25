@@ -102,7 +102,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     /*
-    internal func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
@@ -114,11 +114,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             pinView!.animatesDrop = true
         }
         return pinView
-    } */
+    }*/
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: true)
+        if view.annotation is MKUserLocation {
+            guard (view.annotation == nil) else{
+                print("user location is pressed")
+                return
+            }
+        }
         if editButton.title == "Done" {
             let point = view.annotation
             mapView.removeAnnotation(point!)
