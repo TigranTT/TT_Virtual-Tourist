@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="104.8" y="118.29085457271366"/>
         </scene>
-        <!--View Controller-->
+        <!--GalleryVC-->
         <scene sceneID="93G-Bf-alk">
             <objects>
-                <viewController id="xDK-nD-44g" sceneMemberID="viewController">
+                <viewController id="xDK-nD-44g" customClass="GalleryVC" customModule="TT_VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ujj-DM-BzQ"/>
                         <viewControllerLayoutGuide type="bottom" id="aK6-hz-4jN"/>

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C41A7D141F7884440024C748 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C41A7D131F7884430024C748 /* CoreLocation.framework */; };
+		C487458A1F78B4F200C3E526 /* GalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48745891F78B4F200C3E526 /* GalleryVC.swift */; };
 		C49248BA1F76135500D0C671 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49248B91F76135500D0C671 /* AppDelegate.swift */; };
 		C49248BF1F76135500D0C671 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49248BD1F76135500D0C671 /* Main.storyboard */; };
 		C49248C11F76135500D0C671 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49248C01F76135500D0C671 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		C41A7D131F7884430024C748 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C48745891F78B4F200C3E526 /* GalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryVC.swift; sourceTree = "<group>"; };
 		C49248B61F76135500D0C671 /* TT_VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TT_VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C49248B91F76135500D0C671 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C49248BE1F76135500D0C671 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				C49248CD1F7622F900D0C671 /* Core Data */,
 				C4A8369D1F7721DC0063E3D3 /* CoreDataStackManager.swift */,
 				C49248CB1F761AE900D0C671 /* MapVC.swift */,
+				C48745891F78B4F200C3E526 /* GalleryVC.swift */,
 				C49248BD1F76135500D0C671 /* Main.storyboard */,
 				C49248C01F76135500D0C671 /* Assets.xcassets */,
 				C49248B91F76135500D0C671 /* AppDelegate.swift */,
@@ -182,6 +185,7 @@
 				C49248E81F762D6400D0C671 /* Pin+CoreDataProperties.swift in Sources */,
 				C49248E71F762D6400D0C671 /* Pin+CoreDataClass.swift in Sources */,
 				C49248E61F762D6400D0C671 /* Photo+CoreDataProperties.swift in Sources */,
+				C487458A1F78B4F200C3E526 /* GalleryVC.swift in Sources */,
 				C49248D01F76232300D0C671 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
