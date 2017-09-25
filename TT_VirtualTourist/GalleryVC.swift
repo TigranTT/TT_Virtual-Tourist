@@ -12,9 +12,11 @@ import MapKit
 
 class GalleryVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var pin: Pin!
+    @IBOutlet weak var mapSnapshot: UIImageView!
+    @IBOutlet weak var collectionGallery: UICollectionView!
+    @IBOutlet weak var newCollection: UIButton!
     
-    
+    var pin : Pin!
     
     
     

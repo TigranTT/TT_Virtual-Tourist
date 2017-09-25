@@ -124,7 +124,7 @@
                                     <inset key="sectionInset" minX="3" minY="3" maxX="3" maxY="3"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ye6-rH-nkr">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ye6-rH-nkr" customClass="ImageCell" customModule="TT_VirtualTourist" customModuleProvider="target">
                                         <rect key="frame" x="3" y="3" width="106" height="106"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -181,10 +181,15 @@
                             <constraint firstAttribute="trailing" secondItem="K8T-hc-hb1" secondAttribute="trailing" id="zwn-Eb-Sy4"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionGallery" destination="K8T-hc-hb1" id="1ec-cx-dJN"/>
+                        <outlet property="mapSnapshot" destination="8b1-J8-IEU" id="LA3-mt-vax"/>
+                        <outlet property="newCollection" destination="5ZF-Yc-Hnz" id="1Bs-qD-Xk4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6D-Yz-MCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="821.60000000000002" y="117.39130434782609"/>
+            <point key="canvasLocation" x="798" y="118"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rVk-re-pGm">
