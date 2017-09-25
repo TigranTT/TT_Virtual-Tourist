@@ -101,14 +101,6 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-        pinView.canShowCallout = true
-        pinView.pinTintColor = .red
-        pinView.animatesDrop = true
-        return pinView
-    }*/
-
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: true)
