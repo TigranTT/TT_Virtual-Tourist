@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 import CoreData
+import CoreLocation
 
 
 class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -20,6 +21,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var bottomView: UIView!
     
     var contextPins: [Pin]!
+    let clLocationManager = CLLocationManager()
     var sharedContext: NSManagedObjectContext  = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -28,7 +30,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        clLocationManager.delegate = self
         addLongPressGesture()
+        mapView.showsUserLocation = true
         contextPins = fetchPins()
         for pins in contextPins {
             addAnnotationCoordinate(pins)
@@ -97,18 +101,17 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-        pinView.canShowCallout = false
+        pinView.canShowCallout = true
         pinView.pinTintColor = .red
         pinView.animatesDrop = true
         return pinView
-    }
+    }*/
 
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        //mapView.deselectAnnotation(view.annotation, animated: true)
-        
+        mapView.deselectAnnotation(view.annotation, animated: true)
         for selectedPin in contextPins {
             if selectedPin.latitude == view.annotation?.coordinate.latitude && selectedPin.longitude == view.annotation?.coordinate.longitude && editButton.title == "Done" {
                 sharedContext.delete(selectedPin)
@@ -120,6 +123,16 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             }
         }
     }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+     let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+     pinView.canShowCallout = true
+     pinView.pinTintColor = .red
+     pinView.animatesDrop = true
+     return pinView
+     }
+    
     
     func fetchPins() -> [Pin] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
@@ -144,9 +157,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func lastPinRegion(_ pin: Pin) {
-        let regoin = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude), 20000, 20000)
-        mapView.setRegion(regoin, animated: true)
+        let region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude), 5000, 5000)
+        mapView.setRegion(region, animated: true)
     }
+    
+    
+    @IBAction func showUserLocation(_ sender: Any) {
+        clLocationManager.requestWhenInUseAuthorization()
+        let location = mapView.userLocation
+        let span = MKCoordinateSpanMake(0.01, 0.01)
+        let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude), span)
+        mapView.setRegion(region, animated: true)
+    }
+    
     
     private func showAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

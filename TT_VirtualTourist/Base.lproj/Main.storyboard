@@ -59,6 +59,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="hsm-ZJ-sZJ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="play" id="k7v-au-ogd">
+                            <connections>
+                                <action selector="showUserLocation:" destination="7Pa-jc-sqh" id="uZM-Im-bs8"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="c8a-X9-til">
                             <connections>
                                 <action selector="editButtonPressed:" destination="7Pa-jc-sqh" id="IRg-aD-ocJ"/>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C41A7D141F7884440024C748 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C41A7D131F7884430024C748 /* CoreLocation.framework */; };
 		C49248BA1F76135500D0C671 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49248B91F76135500D0C671 /* AppDelegate.swift */; };
 		C49248BF1F76135500D0C671 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49248BD1F76135500D0C671 /* Main.storyboard */; };
 		C49248C11F76135500D0C671 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49248C01F76135500D0C671 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C41A7D131F7884430024C748 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C49248B61F76135500D0C671 /* TT_VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TT_VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C49248B91F76135500D0C671 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C49248BE1F76135500D0C671 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -41,17 +43,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41A7D141F7884440024C748 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C41A7D121F7884430024C748 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C41A7D131F7884430024C748 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C49248AD1F76135500D0C671 = {
 			isa = PBXGroup;
 			children = (
 				C49248B81F76135500D0C671 /* TT_VirtualTourist */,
 				C49248B71F76135500D0C671 /* Products */,
+				C41A7D121F7884430024C748 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
