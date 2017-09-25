@@ -101,29 +101,38 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    /*
+    internal func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        let reuseID = "pin"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
+        if(pinView == nil) {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView!.canShowCallout = true
+            pinView!.animatesDrop = true
+        }
+        return pinView
+    } */
+    
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: true)
-        for selectedPin in contextPins {
-            if selectedPin.latitude == view.annotation?.coordinate.latitude && selectedPin.longitude == view.annotation?.coordinate.longitude && editButton.title == "Done" {
-                sharedContext.delete(selectedPin)
-                mapView.removeAnnotation(view.annotation!)
-                print("PIN deleted")
-                saveContext()
-            }else if editButton.title == "Edit" {
-                performSegue(withIdentifier: "seguePinPressed", sender: self)
+        if editButton.title == "Done" {
+            let point = view.annotation
+            mapView.removeAnnotation(point!)
+            let pin = contextPins.filter{$0.latitude == point?.coordinate.latitude && $0.longitude == point?.coordinate.longitude}.first
+            if let unwrappedPin = pin {
+                contextPins.remove(at: contextPins.index(of: unwrappedPin)!)
+                sharedContext.delete(unwrappedPin)
             }
+            print("PIN deleted")
+            saveContext()
+        }else{
+            performSegue(withIdentifier: "seguePinPressed", sender: view)
         }
     }
-    
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-     let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-     pinView.canShowCallout = true
-     pinView.pinTintColor = .red
-     pinView.animatesDrop = true
-     return pinView
-     }
     
     
     func fetchPins() -> [Pin] {
@@ -137,7 +146,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             print("Context fetched")
         }catch let error as NSError {
             results = nil
-            print("error \(error)")
+            print("error \(String(describing: error))")
         }
         return results as! [Pin]
     }
@@ -168,6 +177,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "seguePinPressed" {
+            let vc = segue.destination as!  GalleryVC
+            let annotationView = (sender as! MKAnnotationView).annotation
+            let pin = contextPins.filter{$0.latitude == annotationView?.coordinate.latitude && $0.longitude == annotationView?.coordinate.longitude}.first
+            vc.pin = pin
+        }
+    }
+    
+    
+    
     
     
     

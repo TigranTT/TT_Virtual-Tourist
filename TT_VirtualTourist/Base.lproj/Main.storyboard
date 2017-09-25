@@ -151,6 +151,9 @@
                                             <constraint firstItem="ghc-TX-wMg" firstAttribute="centerX" secondItem="Ye6-rH-nkr" secondAttribute="centerX" id="Ylf-Kj-IHD"/>
                                             <constraint firstAttribute="trailing" secondItem="ghc-TX-wMg" secondAttribute="trailing" id="eid-2f-fy2"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="ghc-TX-wMg" id="DWF-nT-3oj"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
