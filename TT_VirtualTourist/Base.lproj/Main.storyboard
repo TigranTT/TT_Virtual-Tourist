@@ -70,7 +70,7 @@
                         <outlet property="bottomView" destination="dmd-2q-49a" id="mY9-9u-hA0"/>
                         <outlet property="editButton" destination="c8a-X9-til" id="LTu-CH-WNX"/>
                         <outlet property="mapView" destination="P8A-3i-VOf" id="da3-o9-vQf"/>
-                        <segue destination="xDK-nD-44g" kind="presentation" identifier="pinPressed" modalTransitionStyle="coverVertical" id="FNQ-cr-xox"/>
+                        <segue destination="xDK-nD-44g" kind="presentation" identifier="seguePinPressed" modalTransitionStyle="coverVertical" id="FNQ-cr-xox"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M5O-ZZ-nOg" userLabel="First Responder" sceneMemberID="firstResponder"/>

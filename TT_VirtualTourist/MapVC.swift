@@ -30,6 +30,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         mapView.delegate = self
         addLongPressGesture()
         contextPins = fetchPins()
+        for pins in contextPins {
+            addAnnotationCoordinate(pins)
+            lastPinRegion(pins)
+        }
     }
     
     
@@ -77,8 +81,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             mapView.addAnnotation(annotation)
             print("PIN dropped")
             print(coordinate)
-            saveContext()
             contextPins.append(Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, title: "", subtitle: "", context: sharedContext))
+            
+            saveContext()
         }
     }
     
@@ -99,18 +104,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         pinView.animatesDrop = true
         return pinView
     }
+
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        mapView.deselectAnnotation(view.annotation, animated: true)
+        //mapView.deselectAnnotation(view.annotation, animated: true)
         
         for selectedPin in contextPins {
             if selectedPin.latitude == view.annotation?.coordinate.latitude && selectedPin.longitude == view.annotation?.coordinate.longitude && editButton.title == "Done" {
                 sharedContext.delete(selectedPin)
-                print("PIN deleted")
                 mapView.removeAnnotation(view.annotation!)
+                print("PIN deleted")
                 saveContext()
             }else if editButton.title == "Edit" {
-                performSegue(withIdentifier: "pinPressed", sender: self)
+                performSegue(withIdentifier: "seguePinPressed", sender: self)
             }
         }
     }
@@ -131,12 +137,16 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         return results as! [Pin]
     }
     
+    func addAnnotationCoordinate(_ pin: Pin) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+        mapView.addAnnotation(annotation)
+    }
     
-    
-    
-    
-    
-    
+    func lastPinRegion(_ pin: Pin) {
+        let regoin = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude), 20000, 20000)
+        mapView.setRegion(regoin, animated: true)
+    }
     
     private func showAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
