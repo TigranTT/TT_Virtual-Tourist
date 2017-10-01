@@ -20,6 +20,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var bottomLabel: UILabel!
     @IBOutlet weak var bottomView: UIView!
     
+    var selectedPin: Pin!
     var contextPins: [Pin]!
     let clLocationManager = CLLocationManager()
     var sharedContext: NSManagedObjectContext {
@@ -199,8 +200,8 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "seguePinPressed" {
             let annotationView = (sender as! MKAnnotationView).annotation
-            let pin = contextPins.filter{$0.latitude == annotationView?.coordinate.latitude && $0.longitude == annotationView?.coordinate.longitude}.first
-            (segue.destination as!  GalleryVC).pin = pin
+            selectedPin = contextPins.filter{$0.latitude == annotationView?.coordinate.latitude && $0.longitude == annotationView?.coordinate.longitude}.first
+            (segue.destination as!  GalleryVC).pin = selectedPin
         }
     }
     
