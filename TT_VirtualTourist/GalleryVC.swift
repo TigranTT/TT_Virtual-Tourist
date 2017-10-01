@@ -22,22 +22,10 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     var flickrPhotos: [Photo]!
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var mapSnapshotter: MKMapSnapshotter!
-    let cellIdentifier = "photoCell"
     let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     let itemsPerRow: CGFloat = 3
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
-    }
-    var selectedIndexes: [Int] = [Int](){
-        didSet{
-            collectionGallery.reloadData()
-            
-            if selectedIndexes.count == 0{
-                newCollection.isEnabled = false
-            } else {
-                newCollection.isEnabled = true
-            }
-        }
     }
     
     
@@ -66,6 +54,7 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
         }
         checkPhotoArray(photoArray: flickrPhotos)
     }
+    
     
     func checkPhotoArray(photoArray: [Photo]) {
         if photoArray.count == 0 {
