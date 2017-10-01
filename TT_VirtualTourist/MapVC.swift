@@ -29,20 +29,20 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.showsUserLocation = true
         mapView.delegate = self
         clLocationManager.delegate = self
         addLongPressGesture()
-        mapView.showsUserLocation = true
-        contextPins = fetchPins()
-        for pins in contextPins {
-            addAnnotationCoordinate(pins)
-            lastPinRegion(pins)
-        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
+        contextPins = fetchPins()
+        for pins in contextPins {
+            addAnnotationCoordinate(pins)
+            lastPinRegion(pins)
+        }
         bottomView.transform = CGAffineTransform(translationX: 0, y: 51)
     }
     
