@@ -19,9 +19,9 @@ extension Pin {
     @NSManaged public var numOfPages: Int64
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
-    @NSManaged public var title: String?
-    @NSManaged public var subtitle: String?
-    @NSManaged public var photo: NSSet?
+    @NSManaged public var title: String
+    @NSManaged public var subtitle: String
+    @NSManaged public var photo: NSSet
 
 }
 

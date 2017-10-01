@@ -10,26 +10,72 @@ import Foundation
 import CoreData
 import MapKit
 
-class GalleryVC: UIViewController, UICollectionViewDelegate {
+class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     
     @IBOutlet weak var mapSnapshot: UIImageView!
     @IBOutlet weak var collectionGallery: UICollectionView!
     @IBOutlet weak var newCollection: UIButton!
     
+    
     var pin: Pin!
+    var flickrPhotos: [Photo]!
+    var fetchedResultsController: NSFetchedResultsController<Photo>!
     var mapSnapshotter: MKMapSnapshotter!
-    let cellIdentifier = "ImageCell"
-    var sharedContext: NSManagedObjectContext  = {
+    let cellIdentifier = "photoCell"
+    let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    let itemsPerRow: CGFloat = 3
+    var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
-    }()
+    }
+    var selectedIndexes: [Int] = [Int](){
+        didSet{
+            collectionGallery.reloadData()
+            
+            if selectedIndexes.count == 0{
+                newCollection.isEnabled = false
+            } else {
+                newCollection.isEnabled = true
+            }
+        }
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapSnapshotter = snapshotSetup()
         snapshot()
+        collectionGallery.delegate = self
+        collectionGallery.dataSource = self
+        collectionGallery.allowsMultipleSelection = true
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "imageURL", ascending: true)]
+        let predicate = NSPredicate(format: "pin == %@", self.pin)
+        fetchRequest.predicate = predicate
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest as! NSFetchRequest<Photo>, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+            flickrPhotos = fetchedResultsController.fetchedObjects!
+        } catch let error as NSError {
+            let message = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
+            self.showAlert("Error", message: message)
+        }
+        checkPhotoArray(photoArray: flickrPhotos)
     }
     
+    func checkPhotoArray(photoArray: [Photo]) {
+        if photoArray.count == 0 {
+            showAlert("Error", message: "No Photos")
+            newCollection.isEnabled = false
+            print("Photo array count =\(photoArray.count)")
+        }else{
+            print("Photo array count =\(photoArray.count)")
+        }
+    }
     
     
     func snapshotSetup() -> MKMapSnapshotter{
@@ -43,7 +89,7 @@ class GalleryVC: UIViewController, UICollectionViewDelegate {
     
     func snapshot(){
         mapSnapshotter.start(completionHandler: { (snapshot, error) -> Void in
-            guard error == nil else {
+            guard (error == nil) else {
                 print("error \(String(describing: error))")
                 return
             }
@@ -65,24 +111,69 @@ class GalleryVC: UIViewController, UICollectionViewDelegate {
             UIGraphicsEndImageContext()
             
             self.mapSnapshot.image = snapshotImage
+            print("got the Snapshot")
         })
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("Got the photo count =\(pin.photo.count)")
+        return pin.photo.count
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! ImageCell
         
+        
+        cell.activityIndicator.startAnimating()
+        let photos = pin.photo
+        let photo = photos.allObjects[indexPath.row] as! Photo
+        let imageURL = URL(string: photo.imageURL!)
+        if let imageData = try? Data(contentsOf: imageURL!) {
+            cell.imageView.image = UIImage(data: imageData)
+            cell.activityIndicator.stopAnimating()
+            cell.backgroundColor = UIColor.blue
+        }
+        
+        print("Got the photo cell")
+        return cell
+    }
     
-
+    /*
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+     
     
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInsets
+    }
+     
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInsets.left
+    }
+    */
+    
+    
+    @IBAction func newCollectionRefresh(_ sender: Any) {
+        print("New Collection was pressed")
+    }
+    
+    private func showAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
 }

@@ -22,9 +22,9 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var contextPins: [Pin]!
     let clLocationManager = CLLocationManager()
-    var sharedContext: NSManagedObjectContext  = {
+    var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
-    }()
+    }
     
     
     override func viewDidLoad() {
@@ -85,8 +85,19 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
             mapView.addAnnotation(annotation)
             print("PIN dropped")
             print(coordinate)
-            contextPins.append(Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, title: "", subtitle: "", context: sharedContext))
+            let newPin = Pin(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude, title: "", subtitle: "", context: sharedContext)
+            contextPins.append(newPin)
             
+            FlickrApi.sharedInstance().getPhotos(pin: newPin, latitude: newPin.latitude, longitude: newPin.longitude, withPageNumber: FlickrApi.numbersOfPages, completionHandler: { (success, error) in
+                performUIUpdatesOnMain {
+                    if error != nil {
+                        let message = "\(String(describing: error!.code)): \(String(describing: error!.localizedDescription))"
+                        self.showAlert("Error", message: message)
+                    }
+                }
+                })
+            
+            print("Added PIN")
             saveContext()
         }
     }
@@ -94,7 +105,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     func saveContext() {
         do {
             try sharedContext.save()
-            print("Context saved")
+            //print("Context saved")
         }catch let error as NSError {
             let messageString = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
             showAlert("Error", message: messageString)
@@ -187,16 +198,10 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "seguePinPressed" {
-            let vc = segue.destination as!  GalleryVC
             let annotationView = (sender as! MKAnnotationView).annotation
             let pin = contextPins.filter{$0.latitude == annotationView?.coordinate.latitude && $0.longitude == annotationView?.coordinate.longitude}.first
-            vc.pin = pin
+            (segue.destination as!  GalleryVC).pin = pin
         }
     }
-    
-    
-    
-    
-    
     
 }
