@@ -22,7 +22,7 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     var flickrPhotos: [Photo]!
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var mapSnapshotter: MKMapSnapshotter!
-    let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     let itemsPerRow: CGFloat = 3
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -124,11 +124,11 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
             cell.backgroundColor = UIColor.blue
         }
         
-        print("Got the photo cell")
+        //print("Got the photo cell")
         return cell
     }
     
-    /*
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -152,7 +152,6 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
-    */
     
     
     @IBAction func newCollectionRefresh(_ sender: Any) {
