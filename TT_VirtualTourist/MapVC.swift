@@ -34,16 +34,16 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         mapView.delegate = self
         clLocationManager.delegate = self
         addLongPressGesture()
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(animated)
         contextPins = fetchPins()
         for pins in contextPins {
             addAnnotationCoordinate(pins)
             lastPinRegion(pins)
         }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
         bottomView.transform = CGAffineTransform(translationX: 0, y: 51)
     }
     
@@ -113,7 +113,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    /*
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
@@ -122,11 +122,11 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
         var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
         if(pinView == nil) {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
-            pinView!.canShowCallout = true
+            pinView!.canShowCallout = false
             pinView!.animatesDrop = true
         }
         return pinView
-    }*/
+    }
     
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

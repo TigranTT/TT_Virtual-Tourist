@@ -15,14 +15,14 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     
     @IBOutlet weak var mapSnapshot: UIImageView!
     @IBOutlet weak var collectionGallery: UICollectionView!
-    @IBOutlet weak var newCollection: UIButton!
+    @IBOutlet weak var newCollectionButton: UIButton!
     
-    
+
     var pin: Pin!
     var flickrPhotos: [Photo]!
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var mapSnapshotter: MKMapSnapshotter!
-    let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+    let sectionInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
     let itemsPerRow: CGFloat = 3
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -41,10 +41,10 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "imageURL", ascending: true)]
         let predicate = NSPredicate(format: "pin == %@", self.pin)
         fetchRequest.predicate = predicate
-        
+
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest as! NSFetchRequest<Photo>, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
-        
+
         do {
             try fetchedResultsController.performFetch()
             flickrPhotos = fetchedResultsController.fetchedObjects!
@@ -59,7 +59,7 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     func checkPhotoArray(photoArray: [Photo]) {
         if photoArray.count == 0 {
             showAlert("Error", message: "No Photos")
-            newCollection.isEnabled = false
+            newCollectionButton.isEnabled = false
             print("Photo array count =\(photoArray.count)")
         }else{
             print("Photo array count =\(photoArray.count)")
@@ -112,19 +112,38 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as! ImageCell
-        
-        
+        cell.imageView.image = nil
         cell.activityIndicator.startAnimating()
-        let photos = pin.photo
-        let photo = photos.allObjects[indexPath.row] as! Photo
-        let imageURL = URL(string: photo.imageURL!)
-        if let imageData = try? Data(contentsOf: imageURL!) {
-            cell.imageView.image = UIImage(data: imageData)
-            cell.activityIndicator.stopAnimating()
-            cell.backgroundColor = UIColor.blue
+        let photo = fetchedResultsController.object(at: indexPath)
+        newCollectionButton.isEnabled = false
+        if photo.imageData != nil {
+            if let image = UIImage(data: photo.imageData! as Data) {
+                cell.activityIndicator.stopAnimating()
+                cell.imageView.image = image
+            }
+            newCollectionButton.isEnabled = true
+        }else if photo.imageURL != nil {
+            FlickrApi.sharedInstance().downloadImageFromURLString(photo.imageURL!, completionHandler: { (result, error) in
+                performUIUpdatesOnMain {
+                    if error != nil {
+                        self.showAlert("Error", message: "No Photos")
+                    }
+                    if let image = UIImage(data: result! as Data) {
+                        cell.activityIndicator.stopAnimating()
+                        cell.imageView.image = image
+                        photo.imageData = result! as NSData
+                        
+                        do {
+                            try self.sharedContext.save()
+                            self.collectionGallery.reloadItems(at: [indexPath])
+                        }catch let error as NSError {
+                            let message = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
+                            self.showAlert("Error", message: message)
+                        }
+                    }
+                }
+            })
         }
-        
-        //print("Got the photo cell")
         return cell
     }
     
@@ -154,7 +173,46 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     }
     
     
+    func refreshCollection() -> Void {
+        
+    }
+    
+    
     @IBAction func newCollectionRefresh(_ sender: Any) {
+        newCollectionButton.isEnabled = false
+        
+        let photos = self.fetchedResultsController.fetchedObjects
+        for photo in photos! {
+            self.sharedContext.delete(photo)
+            do {
+                try self.sharedContext.save()
+            } catch let error as NSError {
+                let message = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
+                self.showAlert("Error", message: message)
+            }
+        }
+        
+        let totalPages = pin.numOfPages
+        let pageLimit = min(totalPages, 40)
+        let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
+        FlickrApi.sharedInstance().getPhotos(pin: pin, latitude: pin.latitude, longitude: pin.longitude, withPageNumber: randomPage, completionHandler: { (pages, error) in
+            performUIUpdatesOnMain {
+                if error != nil {
+                    let message = "\(String(describing: error!.code)): \(String(describing: error!.localizedDescription))"
+                    self.showAlert("Error", message: message)
+                } else {
+                    do {
+                        try self.fetchedResultsController.performFetch()
+                        self.flickrPhotos = self.fetchedResultsController.fetchedObjects!
+                    } catch let error as NSError {
+                        let message = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
+                        self.showAlert("Error", message: message)
+                    }
+                    self.collectionGallery.reloadData()
+                }
+                self.newCollectionButton.isEnabled = true
+            }
+        })
         print("New Collection was pressed")
     }
     
