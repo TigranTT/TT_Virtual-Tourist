@@ -16,10 +16,13 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     @IBOutlet weak var mapSnapshot: UIImageView!
     @IBOutlet weak var collectionGallery: UICollectionView!
     @IBOutlet weak var newCollectionButton: UIButton!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
 
     var pin: Pin!
     var flickrPhotos: [Photo]!
+    var photoID: String!
+    var selectedPhoto: UIImage!
     var fetchedResultsController: NSFetchedResultsController<Photo>!
     var mapSnapshotter: MKMapSnapshotter!
     let sectionInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
@@ -148,6 +151,36 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if editButton.title == "Done" {
+            let photo = self.fetchedResultsController?.object(at: indexPath)
+            
+            self.sharedContext.delete(photo!)
+            do {
+                try self.sharedContext.save()
+                try self.fetchedResultsController.performFetch()
+                self.flickrPhotos = self.fetchedResultsController.fetchedObjects!
+            } catch let error as NSError {
+                let message = "\(String(describing: error.code)): \(String(describing: error.localizedDescription))"
+                self.showAlert("Error", message: message)
+            }
+            self.collectionGallery.deleteItems(at: [indexPath])
+        }else{
+            let cell = collectionView.cellForItem(at: indexPath) as! ImageCell
+            selectedPhoto = cell.imageView.image
+            performSegue(withIdentifier: "seguePhotoPressed", sender: nil)
+        }
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "seguePhotoPressed" {
+            (segue.destination as! PhotoVC).photo = selectedPhoto
+        }
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -216,10 +249,20 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
         print("New Collection was pressed")
     }
     
+    @IBAction func editButtonPressed(_ sender: Any) {
+        if editButton.title == "Edit" {
+            editButton.title = "Done"
+        }else if editButton.title == "Done" {
+            editButton.title = "Edit"
+        }
+    }
+    
+    
     private func showAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
     
 }

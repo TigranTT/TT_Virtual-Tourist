@@ -182,15 +182,58 @@
                             <constraint firstAttribute="trailing" secondItem="K8T-hc-hb1" secondAttribute="trailing" id="zwn-Eb-Sy4"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="yNs-h4-TQg">
+                        <barButtonItem key="backBarButtonItem" title="Back to Gallery" id="mki-Km-0pI"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="giQ-xA-y7Z">
+                            <connections>
+                                <action selector="editButtonPressed:" destination="xDK-nD-44g" id="yv4-xw-VkY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionGallery" destination="K8T-hc-hb1" id="1ec-cx-dJN"/>
+                        <outlet property="editButton" destination="giQ-xA-y7Z" id="bEI-cn-kGn"/>
                         <outlet property="mapSnapshot" destination="8b1-J8-IEU" id="LA3-mt-vax"/>
                         <outlet property="newCollectionButton" destination="5ZF-Yc-Hnz" id="1Bs-qD-Xk4"/>
+                        <segue destination="etg-Gk-e2R" kind="show" identifier="seguePhotoPressed" id="eE1-ag-4Rh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6D-Yz-MCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="797.60000000000002" y="117.39130434782609"/>
+        </scene>
+        <!--PhotoVC-->
+        <scene sceneID="bDC-8J-RsU">
+            <objects>
+                <viewController storyboardIdentifier="PhotoVC" id="etg-Gk-e2R" customClass="PhotoVC" customModule="TT_VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mtd-Pc-Xrh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hqn-yt-GSF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rhd-J0-VxI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rPT-rp-1fo">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rPT-rp-1fo" firstAttribute="leading" secondItem="rhd-J0-VxI" secondAttribute="leading" id="Aa1-cs-41p"/>
+                            <constraint firstItem="Hqn-yt-GSF" firstAttribute="top" secondItem="rPT-rp-1fo" secondAttribute="bottom" id="Xle-Z8-s7p"/>
+                            <constraint firstAttribute="trailing" secondItem="rPT-rp-1fo" secondAttribute="trailing" id="cdE-V5-Noj"/>
+                            <constraint firstItem="rPT-rp-1fo" firstAttribute="top" secondItem="rhd-J0-VxI" secondAttribute="top" id="yuN-ae-N6L"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="rPT-rp-1fo" id="Ht9-0h-DVv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zob-Wa-8QV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1512.8" y="116.49175412293854"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rVk-re-pGm">

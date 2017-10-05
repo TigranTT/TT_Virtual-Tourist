@@ -23,6 +23,7 @@
 		C49248E61F762D6400D0C671 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49248E21F762D6400D0C671 /* Photo+CoreDataProperties.swift */; };
 		C49248E71F762D6400D0C671 /* Pin+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49248E31F762D6400D0C671 /* Pin+CoreDataClass.swift */; };
 		C49248E81F762D6400D0C671 /* Pin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49248E41F762D6400D0C671 /* Pin+CoreDataProperties.swift */; };
+		C49B232A1F8381060028C1E2 /* PhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49B23291F8381060028C1E2 /* PhotoVC.swift */; };
 		C4A8369E1F7721DC0063E3D3 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A8369D1F7721DC0063E3D3 /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		C49248E21F762D6400D0C671 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C49248E31F762D6400D0C671 /* Pin+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pin+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C49248E41F762D6400D0C671 /* Pin+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pin+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C49B23291F8381060028C1E2 /* PhotoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoVC.swift; sourceTree = "<group>"; };
 		C4A8369D1F7721DC0063E3D3 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,13 +104,14 @@
 				C4A8369D1F7721DC0063E3D3 /* CoreDataStackManager.swift */,
 				C49248CB1F761AE900D0C671 /* MapVC.swift */,
 				C48745891F78B4F200C3E526 /* GalleryVC.swift */,
+				C49B23291F8381060028C1E2 /* PhotoVC.swift */,
 				C487458B1F78B8A300C3E526 /* ImageCell.swift */,
 				C49248BD1F76135500D0C671 /* Main.storyboard */,
-				C49248C01F76135500D0C671 /* Assets.xcassets */,
 				C49248B91F76135500D0C671 /* AppDelegate.swift */,
+				C4195DA61F7F8B9B00BB0CFD /* GCDBlackBox.swift */,
+				C49248C01F76135500D0C671 /* Assets.xcassets */,
 				C49248C21F76135500D0C671 /* LaunchScreen.storyboard */,
 				C49248C51F76135500D0C671 /* Info.plist */,
-				C4195DA61F7F8B9B00BB0CFD /* GCDBlackBox.swift */,
 			);
 			path = TT_VirtualTourist;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				C487458C1F78B8A300C3E526 /* ImageCell.swift in Sources */,
 				C4195DA11F78F9D500BB0CFD /* Constants.swift in Sources */,
 				C4195DA71F7F8B9B00BB0CFD /* GCDBlackBox.swift in Sources */,
+				C49B232A1F8381060028C1E2 /* PhotoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
