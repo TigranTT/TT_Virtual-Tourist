@@ -29,7 +29,11 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Allow this app to use current location when in use!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow this app to use current location when in use!</string>
+	<string>Allow to use current location when in use!</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow to access Photos!</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow to access Photos!</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

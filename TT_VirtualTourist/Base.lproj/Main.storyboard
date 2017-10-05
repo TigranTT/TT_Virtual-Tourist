@@ -83,7 +83,7 @@
             </objects>
             <point key="canvasLocation" x="104.8" y="118.29085457271366"/>
         </scene>
-        <!--GalleryVC-->
+        <!--Gallery-->
         <scene sceneID="93G-Bf-alk">
             <objects>
                 <viewController id="xDK-nD-44g" customClass="GalleryVC" customModule="TT_VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
@@ -182,8 +182,8 @@
                             <constraint firstAttribute="trailing" secondItem="K8T-hc-hb1" secondAttribute="trailing" id="zwn-Eb-Sy4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="yNs-h4-TQg">
-                        <barButtonItem key="backBarButtonItem" title="Back to Gallery" id="mki-Km-0pI"/>
+                    <navigationItem key="navigationItem" title="Gallery" id="yNs-h4-TQg">
+                        <barButtonItem key="backBarButtonItem" title="Gallery" id="mki-Km-0pI"/>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="giQ-xA-y7Z">
                             <connections>
                                 <action selector="editButtonPressed:" destination="xDK-nD-44g" id="yv4-xw-VkY"/>
@@ -210,25 +210,30 @@
                         <viewControllerLayoutGuide type="top" id="Mtd-Pc-Xrh"/>
                         <viewControllerLayoutGuide type="bottom" id="Hqn-yt-GSF"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="rhd-J0-VxI">
+                    <scrollView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="kF4-gf-AVd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rPT-rp-1fo">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="waw-xt-yBt">
+                                <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="rPT-rp-1fo" firstAttribute="leading" secondItem="rhd-J0-VxI" secondAttribute="leading" id="Aa1-cs-41p"/>
-                            <constraint firstItem="Hqn-yt-GSF" firstAttribute="top" secondItem="rPT-rp-1fo" secondAttribute="bottom" id="Xle-Z8-s7p"/>
-                            <constraint firstAttribute="trailing" secondItem="rPT-rp-1fo" secondAttribute="trailing" id="cdE-V5-Noj"/>
-                            <constraint firstItem="rPT-rp-1fo" firstAttribute="top" secondItem="rhd-J0-VxI" secondAttribute="top" id="yuN-ae-N6L"/>
-                        </constraints>
-                    </view>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <connections>
+                            <outlet property="delegate" destination="etg-Gk-e2R" id="bEp-Hv-naB"/>
+                        </connections>
+                    </scrollView>
+                    <navigationItem key="navigationItem" id="CQy-E4-dF4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="noD-iR-dQ3">
+                            <connections>
+                                <action selector="share:" destination="etg-Gk-e2R" id="qD7-AO-oyH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="imageView" destination="rPT-rp-1fo" id="Ht9-0h-DVv"/>
+                        <outlet property="imageView" destination="waw-xt-yBt" id="aNU-uO-0GY"/>
+                        <outlet property="scrollView" destination="kF4-gf-AVd" id="0Pa-Hh-jWq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zob-Wa-8QV" userLabel="First Responder" sceneMemberID="firstResponder"/>
