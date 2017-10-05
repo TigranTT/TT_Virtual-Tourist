@@ -252,8 +252,10 @@ class GalleryVC: UIViewController, CLLocationManagerDelegate, NSFetchedResultsCo
     @IBAction func editButtonPressed(_ sender: Any) {
         if editButton.title == "Edit" {
             editButton.title = "Done"
+            editButton.tintColor = UIColor.red
         }else if editButton.title == "Done" {
             editButton.title = "Edit"
+            editButton.tintColor = nil
         }
     }
     
