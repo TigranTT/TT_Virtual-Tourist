@@ -78,7 +78,7 @@ class MapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func addPins(gesture: UILongPressGestureRecognizer) {
-        if editButton.title == "Edit" && gesture.state == .ended {
+        if editButton.title == "Edit" && gesture.state == .began {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
             let annotation = MKPointAnnotation()
